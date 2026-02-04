@@ -58,29 +58,29 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-blue-50/30 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-blue-50/30 py-4 sm:py-8 px-3 sm:px-4">
       <div className="max-w-7xl mx-auto">
         {/* Profile Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Card className="mb-8 bg-white border border-gray-100 shadow-[0_2px_20px_rgba(0,0,0,0.06)] rounded-2xl overflow-hidden">
-          <CardContent className="p-8">
-            <div className="flex items-start justify-between flex-wrap gap-6">
-              <div className="flex items-center gap-5">
-                <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-2xl font-bold shadow-md">
+          <Card className="mb-6 sm:mb-8 bg-white border border-gray-100 shadow-[0_2px_20px_rgba(0,0,0,0.06)] rounded-2xl overflow-hidden">
+          <CardContent className="p-4 sm:p-6 md:p-8">
+            <div className="flex items-start justify-between flex-wrap gap-4 sm:gap-6">
+              <div className="flex items-center gap-3 sm:gap-5">
+                <div className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-md">
                   {user?.full_name?.charAt(0) || 'U'}
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-1">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-1">
                     {user?.full_name || 'User'}
                   </h2>
-                  <p className="text-gray-600 text-sm mb-2">{user?.email}</p>
-                  <div className="flex items-center gap-2">
+                  <p className="text-gray-600 text-xs sm:text-sm mb-2 truncate max-w-[200px] sm:max-w-none">{user?.email}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
                     <Badge 
                       variant="secondary"
-                      className="rounded-full px-3 bg-purple-50 text-purple-700 border-0"
+                      className="rounded-full px-2 sm:px-3 text-xs bg-purple-50 text-purple-700 border-0"
                     >
                       {user?.role || 'user'}
                     </Badge>
@@ -92,18 +92,18 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-6">
-                <div className="text-center px-6 py-4 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl">
-                  <div className="text-4xl font-bold text-gray-900">{stats.total}</div>
-                  <div className="text-sm text-gray-600 mt-1 font-medium">Total Projects</div>
+              <div className="flex items-center gap-3 sm:gap-6 w-full sm:w-auto">
+                <div className="text-center px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl flex-1 sm:flex-none">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">{stats.total}</div>
+                  <div className="text-xs sm:text-sm text-gray-600 mt-1 font-medium">Total Projects</div>
                 </div>
-                <div className="flex gap-6 text-sm">
+                <div className="hidden sm:flex gap-4 md:gap-6 text-sm">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">{stats.complete}</div>
+                    <div className="text-xl md:text-2xl font-bold text-gray-900">{stats.complete}</div>
                     <div className="text-gray-500 text-xs">Complete</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">{stats.inProgress}</div>
+                    <div className="text-xl md:text-2xl font-bold text-gray-900">{stats.inProgress}</div>
                     <div className="text-gray-500 text-xs">In Progress</div>
                   </div>
                 </div>
@@ -112,32 +112,33 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-1 sm:mb-2">
               Dashboard
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 text-sm sm:text-base md:text-lg">
               AI Prompt Agent - Plan your app like a developer
             </p>
           </div>
-          <div className="flex gap-3">
-            <Link to="/Templates">
-              <Button variant="outline" className="gap-2">
+          <div className="flex gap-2 sm:gap-3 w-full sm:w-auto">
+            <Link to="/Templates" className="flex-1 sm:flex-none">
+              <Button variant="outline" className="gap-2 w-full text-sm sm:text-base">
                 <Sparkles className="h-4 w-4" />
-                Templates
+                <span className="hidden sm:inline">Templates</span>
               </Button>
             </Link>
-            <Link to="/Examples">
-              <Button variant="outline" className="gap-2">
+            <Link to="/Examples" className="flex-1 sm:flex-none">
+              <Button variant="outline" className="gap-2 w-full text-sm sm:text-base">
                 <Sparkles className="h-4 w-4" />
-                Examples
+                <span className="hidden sm:inline">Examples</span>
               </Button>
             </Link>
-            <Link to="/NewProject">
-              <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2">
-                <Plus className="h-5 w-5" />
-                New Plan
+            <Link to="/NewProject" className="flex-1 sm:flex-none">
+              <Button className="bg-indigo-600 hover:bg-indigo-700 gap-2 w-full text-sm sm:text-base">
+                <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                <span className="hidden sm:inline">New Plan</span>
+                <span className="sm:hidden">New</span>
               </Button>
             </Link>
           </div>
