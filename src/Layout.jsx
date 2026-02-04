@@ -41,26 +41,26 @@ export default function Layout({ children, currentPageName }) {
   const showNav = currentPageName !== 'Home' && user;
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative bg-background">
       <AnimatedBackground />
       
       {showNav && (
-        <nav className="relative z-20 bg-white/40 backdrop-blur-md border-b border-gray-200">
+        <nav className="relative z-20 bg-card/80 backdrop-blur-md border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 font-bold text-xl text-gray-900">
-                <Home className="h-5 w-5" />
-                Nexus Developer AI
+              <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 font-semibold text-xl text-foreground">
+                <Home className="h-5 w-5 text-primary" />
+                VibeDeveloper AI
               </Link>
               
               <div className="flex items-center gap-4">
                 <Link to={createPageUrl('Pricing')}>
-                  <Button variant="ghost" size="sm" className="text-gray-700 hover:bg-white/60">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-accent/10 hover:text-foreground rounded-lg">
                     Pricing
                   </Button>
                 </Link>
                 <Link to={createPageUrl('Help')}>
-                  <Button variant="ghost" size="sm" className="text-gray-700 hover:bg-white/60">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:bg-accent/10 hover:text-foreground rounded-lg">
                     Help
                   </Button>
                 </Link>
@@ -68,8 +68,8 @@ export default function Layout({ children, currentPageName }) {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                      <Avatar className="h-9 w-9 border-2 border-indigo-600">
-                        <AvatarFallback className="bg-indigo-600 text-white font-semibold">
+                      <Avatar className="h-9 w-9 border-2 border-primary">
+                        <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                           {user?.full_name?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'}
                         </AvatarFallback>
                       </Avatar>
@@ -81,7 +81,7 @@ export default function Layout({ children, currentPageName }) {
                         <p className="text-sm font-medium leading-none">{user?.full_name || 'User'}</p>
                         <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
                         {subscription && (
-                          <p className="text-xs leading-none text-indigo-600 font-semibold mt-1">
+                          <p className="text-xs leading-none text-primary font-semibold mt-1">
                             {subscription.plan_name} Plan
                           </p>
                         )}

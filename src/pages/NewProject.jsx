@@ -156,7 +156,7 @@ Make it copy-paste ready for Base44, Cursor, Claude, or any AI code generator.`,
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-purple-50 py-8 px-4">
+    <div className="min-h-screen bg-background py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -164,7 +164,7 @@ Make it copy-paste ready for Base44, Cursor, Claude, or any AI code generator.`,
           className="mb-6"
         >
           <Link to="/Dashboard">
-            <Button variant="ghost" className="gap-2 hover:bg-white/50 rounded-lg">
+            <Button variant="ghost" className="gap-2 hover:bg-accent/10 rounded-xl text-muted-foreground">
               <ArrowLeft className="h-4 w-4" />
               Back to Dashboard
             </Button>
@@ -177,27 +177,26 @@ Make it copy-paste ready for Base44, Cursor, Claude, or any AI code generator.`,
           className="text-center mb-10"
         >
           <div className="relative inline-block mb-4">
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-blue-500 to-blue-600 blur-3xl opacity-20" />
-            <h1 className="relative text-6xl font-black text-gray-900 mb-1 tracking-tight" style={{ textShadow: '0 2px 40px rgba(59, 130, 246, 0.3)' }}>
+            <h1 className="relative text-5xl font-semibold text-foreground mb-1 tracking-tight">
               AI Prompt Planner
             </h1>
           </div>
-          <p className="text-gray-800 text-lg mb-8 font-semibold tracking-wide">
+          <p className="text-muted-foreground text-lg mb-8 font-normal">
             Create professional app prompts with the 5P framework
           </p>
           
-          <div className="inline-flex gap-2 p-1.5 bg-white rounded-lg shadow-sm border border-gray-100">
+          <div className="inline-flex gap-2 p-1.5 bg-card rounded-xl shadow-sm border border-border">
             <Button
               variant={!quickMode ? "default" : "ghost"}
               onClick={() => setQuickMode(false)}
-              className={`gap-2 rounded-md ${!quickMode ? 'bg-gradient-to-r from-yellow-500 to-blue-600 text-white' : 'hover:bg-gray-50'}`}
+              className={`gap-2 rounded-lg transition-all ${!quickMode ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
             >
               Guided Mode
             </Button>
             <Button
               variant={quickMode ? "default" : "ghost"}
               onClick={() => setQuickMode(true)}
-              className={`gap-2 rounded-md ${quickMode ? 'bg-gradient-to-r from-yellow-500 to-blue-600 text-white' : 'hover:bg-gray-50'}`}
+              className={`gap-2 rounded-lg transition-all ${quickMode ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'hover:bg-accent/10 text-muted-foreground'}`}
             >
               <Zap className="h-4 w-4" />
               Quick Mode
@@ -305,21 +304,21 @@ function QuickPromptMode({ projectData, onComplete, isGenerating }) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="bg-white rounded-2xl border-0 shadow-2xl p-10 transform hover:shadow-3xl transition-all duration-300"
+      className="bg-card rounded-2xl border border-border shadow-lg p-10 transition-all duration-300"
     >
       <div className="text-center mb-8">
-        <div className="inline-flex p-4 bg-gradient-to-br from-yellow-500 to-blue-600 rounded-xl mb-4">
-          <Zap className="h-10 w-10 text-white" />
+        <div className="inline-flex p-4 bg-primary/10 rounded-xl mb-4">
+          <Zap className="h-10 w-10 text-primary" />
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">Quick Prompt Mode</h2>
-        <p className="text-gray-600">
+        <h2 className="text-3xl font-semibold text-foreground mb-3">Quick Prompt Mode</h2>
+        <p className="text-muted-foreground">
           Describe your app idea and get a structured development prompt
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Project Title *
           </label>
           <input
@@ -327,25 +326,25 @@ function QuickPromptMode({ projectData, onComplete, isGenerating }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="e.g., Real Estate CRM"
-            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Describe your app idea *
           </label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Example: I need an app to manage real estate listings, track client interactions, schedule property viewings, and generate reports. It should work for a team of 5 agents and handle about 50 properties at a time."
-            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
             rows={8}
             required
           />
-          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-            <p className="text-sm text-blue-900">
+          <div className="mt-3 p-3 bg-primary/5 rounded-xl border border-primary/10">
+            <p className="text-sm text-foreground">
               💡 Tip: Include who will use it, what problem it solves, and key features you need
             </p>
           </div>
@@ -354,7 +353,7 @@ function QuickPromptMode({ projectData, onComplete, isGenerating }) {
         <Button
           type="submit"
           disabled={isGenerating || !prompt.trim() || !title.trim()}
-          className="w-full py-4 bg-orange-500 hover:bg-orange-600 rounded-lg shadow-sm font-medium"
+          className="w-full py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-sm font-medium transition-all"
         >
           {isGenerating ? (
             <>

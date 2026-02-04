@@ -120,15 +120,15 @@ Generate 2 realistic workflow descriptions explaining how they currently handle 
   const isValid = formData.plan_current_tools;
 
   return (
-    <Card className="max-w-3xl mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-sm transform hover:shadow-3xl transition-shadow duration-300">
-      <CardHeader>
-        <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
-            <FileText className="h-5 w-5 text-purple-600" />
+    <Card className="max-w-3xl mx-auto bg-card border border-border shadow-lg rounded-2xl transition-all duration-300">
+      <CardHeader className="pt-10 pb-8 px-10 border-b border-border">
+        <div className="flex items-center gap-5">
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <FileText className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <CardTitle>Step 3: Understand the PLAN</CardTitle>
-            <CardDescription>How are you currently handling this?</CardDescription>
+            <CardTitle className="text-3xl font-semibold text-foreground mb-1">Understand the PLAN</CardTitle>
+            <CardDescription className="text-base text-muted-foreground">How are you currently handling this?</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -270,13 +270,13 @@ Generate 2 realistic workflow descriptions explaining how they currently handle 
               type="button"
               variant="outline"
               onClick={onBack}
-              className="flex-1"
+              className="flex-1 py-6 text-base font-medium rounded-xl"
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
             <Button 
               type="submit" 
-              className="flex-1 bg-purple-600 hover:bg-purple-700"
+              className="flex-1 py-6 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-sm transition-all"
               disabled={!isValid}
             >
               Next: Design the Pivot <ArrowRight className="ml-2 h-4 w-4" />

@@ -72,15 +72,15 @@ Generate 2 concise solution approaches for an app that would solve this problem.
   const isValid = formData.pivot_solution;
 
   return (
-    <Card className="max-w-3xl mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-sm transform hover:shadow-3xl transition-shadow duration-300">
-      <CardHeader>
-        <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-            <Lightbulb className="h-5 w-5 text-green-600" />
+    <Card className="max-w-3xl mx-auto bg-card border border-border shadow-lg rounded-2xl transition-all duration-300">
+      <CardHeader className="pt-10 pb-8 px-10 border-b border-border">
+        <div className="flex items-center gap-5">
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <Lightbulb className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <CardTitle>Step 4: Design the PIVOT</CardTitle>
-            <CardDescription>What's the solution you want to build?</CardDescription>
+            <CardTitle className="text-3xl font-semibold text-foreground mb-1">Design the PIVOT</CardTitle>
+            <CardDescription className="text-base text-muted-foreground">What's the solution you want to build?</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -164,13 +164,13 @@ Generate 2 concise solution approaches for an app that would solve this problem.
               type="button"
               variant="outline"
               onClick={onBack}
-              className="flex-1"
+              className="flex-1 py-6 text-base font-medium rounded-xl"
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
             <Button 
               type="submit" 
-              className="flex-1 bg-green-600 hover:bg-green-700"
+              className="flex-1 py-6 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-sm transition-all"
               disabled={!isValid}
             >
               Next: Define the Payoff <ArrowRight className="ml-2 h-4 w-4" />

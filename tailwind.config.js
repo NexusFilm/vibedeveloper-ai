@@ -4,12 +4,28 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['Lexend', 'system-ui', 'sans-serif'],
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			brand: {
+  				DEFAULT: '#13b6ec',
+  				50: '#e6f7fd',
+  				100: '#b3e7f9',
+  				200: '#80d7f5',
+  				300: '#4dc7f1',
+  				400: '#13b6ec',
+  				500: '#0f9fd4',
+  				600: '#0c88bc',
+  				700: '#0971a4',
+  				800: '#065a8c',
+  				900: '#034374',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

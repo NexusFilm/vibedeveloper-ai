@@ -81,15 +81,15 @@ Generate 3 common, specific problems or friction points they likely face in thei
   const isValid = formData.problem_description;
 
   return (
-    <Card className="max-w-3xl mx-auto shadow-2xl border-0 bg-white/95 backdrop-blur-sm transform hover:shadow-3xl transition-shadow duration-300">
-      <CardHeader className="pt-10 pb-8 px-10 border-b border-gray-100">
+    <Card className="max-w-3xl mx-auto bg-card border border-border shadow-lg rounded-2xl transition-all duration-300">
+      <CardHeader className="pt-10 pb-8 px-10 border-b border-border">
         <div className="flex items-center gap-5">
-          <div className="h-16 w-16 rounded-2xl bg-orange-100 flex items-center justify-center shadow-lg">
-            <AlertCircle className="h-8 w-8 text-orange-600" />
+          <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <AlertCircle className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <CardTitle className="text-3xl font-bold text-gray-900 mb-1">Identify the PROBLEM</CardTitle>
-            <CardDescription className="text-base text-gray-500">What's the real friction or pain point?</CardDescription>
+            <CardTitle className="text-3xl font-semibold text-foreground mb-1">Identify the PROBLEM</CardTitle>
+            <CardDescription className="text-base text-muted-foreground">What's the real friction or pain point?</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -97,7 +97,7 @@ Generate 3 common, specific problems or friction points they likely face in thei
         <form onSubmit={handleSubmit} className="space-y-8 pt-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Label htmlFor="problem" className="text-sm font-semibold text-gray-900 tracking-wide uppercase text-xs">What's the specific problem or friction? *</Label>
+              <Label htmlFor="problem" className="text-sm font-medium text-foreground tracking-wide uppercase text-xs">What's the specific problem or friction? *</Label>
               <HelpTooltip 
                 title="Be Specific About the Problem"
                 content="Instead of 'disorganized', describe what disorganization looks like: 'I can't find client emails when they call' or 'I forget to follow up with leads'."
@@ -106,36 +106,29 @@ Generate 3 common, specific problems or friction points they likely face in thei
             </div>
             
             {loadingSuggestions && (
-              <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg text-sm text-blue-900 mb-3">
-                <Loader2 className="h-4 w-4 animate-spin" />
+              <div className="flex items-center gap-2 p-3 bg-primary/5 rounded-xl border border-primary/10 text-sm text-foreground mb-3">
+                <Loader2 className="h-4 w-4 animate-spin text-primary" />
                 AI is analyzing common challenges for {projectData.person_role}s...
               </div>
             )}
 
             {suggestions.length > 0 && (
               <div className="space-y-2 mb-3">
-                <div className="flex items-center gap-2 text-xs font-medium text-gray-600">
-                  <Sparkles className="h-3.5 w-3.5 text-yellow-500" />
+                <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <Sparkles className="h-3.5 w-3.5 text-primary" />
                   AI Suggestions - Click to add
                 </div>
                 <div className="space-y-2">
-                  {suggestions.map((suggestion, idx) => {
-                    const colors = [
-                      'from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100 border-orange-200',
-                      'from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 border-blue-200',
-                      'from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border-purple-200'
-                    ];
-                    return (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className={`w-full text-left p-3 bg-gradient-to-r ${colors[idx % colors.length]} border rounded-lg text-sm text-gray-700 transition-all shadow-sm hover:shadow-md`}
-                      >
-                        {suggestion}
-                      </button>
-                    );
-                  })}
+                  {suggestions.map((suggestion, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="w-full text-left p-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-xl text-sm text-foreground transition-all"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
@@ -160,8 +153,8 @@ Generate 3 common, specific problems or friction points they likely face in thei
             </div>
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-gray-100">
-            <Label htmlFor="frequency" className="text-sm font-semibold text-gray-900 tracking-wide uppercase text-xs">How often does this happen?</Label>
+          <div className="space-y-4 pt-4 border-t border-border">
+            <Label htmlFor="frequency" className="text-sm font-medium text-foreground tracking-wide uppercase text-xs">How often does this happen?</Label>
             <div className="flex flex-wrap gap-2 mb-2">
               {FREQUENCIES.map(freq => (
                 <Badge
@@ -184,8 +177,8 @@ Generate 3 common, specific problems or friction points they likely face in thei
             />
           </div>
 
-          <div className="space-y-4 pt-4 border-t border-gray-100">
-            <Label htmlFor="impact" className="text-sm font-semibold text-gray-900 tracking-wide uppercase text-xs">What does this cost you?</Label>
+          <div className="space-y-4 pt-4 border-t border-border">
+            <Label htmlFor="impact" className="text-sm font-medium text-foreground tracking-wide uppercase text-xs">What does this cost you?</Label>
             <div className="flex flex-wrap gap-2 mb-2">
               {IMPACTS.map(impact => (
                 <Badge
@@ -208,18 +201,18 @@ Generate 3 common, specific problems or friction points they likely face in thei
             />
           </div>
 
-          <div className="flex gap-4 mt-8 pt-8 border-t border-gray-200">
+          <div className="flex gap-4 mt-8 pt-8 border-t border-border">
             <Button 
               type="button"
               variant="outline"
               onClick={onBack}
-              className="flex-1 py-6 text-base font-semibold rounded-xl"
+              className="flex-1 py-6 text-base font-medium rounded-xl"
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
             <Button 
               type="submit" 
-              className="flex-1 py-6 text-base font-semibold bg-orange-600 hover:bg-orange-700 rounded-xl shadow-lg hover:shadow-xl transition-all"
+              className="flex-1 py-6 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl shadow-sm transition-all"
               disabled={!isValid}
             >
               Next: Current Plan <ArrowRight className="ml-2 h-4 w-4" />
