@@ -38,7 +38,7 @@ export default function Layout({ children, currentPageName }) {
     base44.auth.logout(createPageUrl('Home'));
   };
 
-  const showNav = currentPageName !== 'Home' && user;
+  const showNav = currentPageName !== 'Home' && currentPageName !== 'Auth' && user;
 
   return (
     <div className="min-h-screen relative bg-background">

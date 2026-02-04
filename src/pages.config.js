@@ -1,4 +1,5 @@
 import AdminDashboard from './pages/AdminDashboard';
+import Auth from './pages/Auth';
 import CanvasView from './pages/CanvasView';
 import Dashboard from './pages/Dashboard';
 import Examples from './pages/Examples';
@@ -15,6 +16,7 @@ import __Layout from './Layout.jsx';
 
 export const PAGES = {
     "AdminDashboard": AdminDashboard,
+    "Auth": Auth,
     "CanvasView": CanvasView,
     "Dashboard": Dashboard,
     "Examples": Examples,
@@ -29,7 +31,7 @@ export const PAGES = {
 }
 
 export const pagesConfig = {
-    mainPage: "NewProject",
+    mainPage: "Home",
     Pages: PAGES,
     Layout: __Layout,
 };

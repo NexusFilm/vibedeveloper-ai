@@ -8,7 +8,7 @@ import { base44 } from '@/api/base44Client';
 
 export default function Home() {
   const handleGetStarted = () => {
-    base44.auth.redirectToLogin(createPageUrl('Dashboard'));
+    window.location.href = '/Auth';
   };
 
   return (
