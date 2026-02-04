@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization, X-Tenant-ID'
   );
 
   if (req.method === 'OPTIONS') {
@@ -51,17 +51,43 @@ export default async function handler(req, res) {
     }
 
     // Get request body
-    const { priceId } = req.body;
+    const { priceId, tenantId, planName } = req.body;
 
     if (!priceId) {
       return res.status(400).json({ error: 'Price ID is required' });
+    }
+
+    // If tenantId is provided, verify user has access to this tenant
+    if (tenantId) {
+      const { data: membership, error: membershipError } = await supabase
+        .from('tenant_members')
+        .select('role')
+        .eq('tenant_id', tenantId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (membershipError || !membership) {
+        return res.status(403).json({ error: 'Access denied to this tenant' });
+      }
+
+      // Get the pricing plan details if tenant-specific
+      const { data: pricingPlan } = await supabase
+        .from('pricing_plans')
+        .select('*')
+        .eq('tenant_id', tenantId)
+        .or(`stripe_price_id_monthly.eq.${priceId},stripe_price_id_yearly.eq.${priceId}`)
+        .single();
+
+      if (!pricingPlan) {
+        return res.status(400).json({ error: 'Invalid pricing plan for this tenant' });
+      }
     }
 
     // Get origin for redirect URLs
     const origin = req.headers.origin || req.headers.referer || 'https://vibedeveloperai.vercel.app';
 
     // Create Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
+    const sessionData = {
       payment_method_types: ['card'],
       line_items: [
         {
@@ -69,7 +95,7 @@ export default async function handler(req, res) {
           quantity: 1,
         },
       ],
-      mode: priceId.includes('subscription') ? 'subscription' : 'payment',
+      mode: priceId.includes('subscription') || planName ? 'subscription' : 'payment',
       success_url: `${origin}/Dashboard?payment=success`,
       cancel_url: `${origin}/Pricing?payment=cancelled`,
       customer_email: user.email,
@@ -78,9 +104,30 @@ export default async function handler(req, res) {
         user_id: user.id,
         user_email: user.email || '',
       },
-    });
+    };
 
-    return res.status(200).json({ url: session.url });
+    // Add tenant-specific metadata if provided
+    if (tenantId) {
+      sessionData.metadata.tenant_id = tenantId;
+      sessionData.metadata.plan_name = planName;
+      
+      if (sessionData.mode === 'subscription') {
+        sessionData.subscription_data = {
+          metadata: {
+            tenant_id: tenantId,
+            user_id: user.id,
+            plan_name: planName,
+          },
+        };
+      }
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionData);
+
+    return res.status(200).json({ 
+      url: session.url,
+      session_id: session.id 
+    });
 
   } catch (error) {
     console.error('Error in create-checkout:', error);

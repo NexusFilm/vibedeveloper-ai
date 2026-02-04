@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, ArrowRight } from "lucide-react";
 import HelpTooltip from './HelpTooltip';
+import { SmartInput } from '@/components/ui/smart-input';
+import { AISuggestions } from '@/components/ui/ai-suggestions';
 
 const INDUSTRIES = ['Real Estate', 'Education', 'Healthcare', 'Consulting', 'E-commerce', 'Nonprofit', 'Creative Services', 'Finance', 'Legal'];
 const ROLES = ['Founder', 'Solo Operator', 'Administrator', 'Sales Professional', 'Teacher', 'Consultant', 'Manager', 'Freelancer'];
@@ -22,6 +24,11 @@ export default function Step1Person({ projectData, onUpdate, onNext }) {
     person_tone: projectData.person_tone || '',
     person_visual: projectData.person_visual || ''
   });
+  const [showCustomInputs, setShowCustomInputs] = React.useState({
+    industry: false,
+    role: false,
+    environment: false
+  });
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -29,6 +36,14 @@ export default function Step1Person({ projectData, onUpdate, onNext }) {
 
   const handleChipClick = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    // Hide custom input when chip is selected
+    if (field === 'person_industry') setShowCustomInputs(prev => ({ ...prev, industry: false }));
+    if (field === 'person_role') setShowCustomInputs(prev => ({ ...prev, role: false }));
+    if (field === 'person_environment') setShowCustomInputs(prev => ({ ...prev, environment: false }));
+  };
+
+  const handleCustomInput = (field, show) => {
+    setShowCustomInputs(prev => ({ ...prev, [field]: show }));
   };
 
   const handleSubmit = (e) => {
@@ -84,14 +99,28 @@ export default function Step1Person({ projectData, onUpdate, onNext }) {
                 </button>
               ))}
             </div>
-            <Input
-              id="industry"
-              placeholder="Or type your own..."
-              value={formData.person_industry}
-              onChange={(e) => handleChange('person_industry', e.target.value)}
-              className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
-              required
-            />
+            <div className="space-y-2">
+              <Input
+                id="industry"
+                placeholder="Or type your own..."
+                value={formData.person_industry}
+                onChange={(e) => handleChange('person_industry', e.target.value)}
+                onFocus={() => handleCustomInput('industry', true)}
+                className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
+                required
+              />
+              {showCustomInputs.industry && (
+                <AISuggestions
+                  fieldName="person_industry"
+                  currentValue={formData.person_industry}
+                  context={{}}
+                  onSuggestionClick={(suggestion) => handleChange('person_industry', suggestion)}
+                  suggestionType="chips"
+                  maxSuggestions={6}
+                  autoGenerate={true}
+                />
+              )}
+            </div>
           </div>
 
           <div className="space-y-4 pt-4 border-t border-gray-100">
@@ -119,14 +148,28 @@ export default function Step1Person({ projectData, onUpdate, onNext }) {
                 </button>
               ))}
             </div>
-            <Input
-              id="role"
-              placeholder="Or type your own..."
-              value={formData.person_role}
-              onChange={(e) => handleChange('person_role', e.target.value)}
-              className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
-              required
-            />
+            <div className="space-y-2">
+              <Input
+                id="role"
+                placeholder="Or type your own..."
+                value={formData.person_role}
+                onChange={(e) => handleChange('person_role', e.target.value)}
+                onFocus={() => handleCustomInput('role', true)}
+                className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
+                required
+              />
+              {showCustomInputs.role && (
+                <AISuggestions
+                  fieldName="person_role"
+                  currentValue={formData.person_role}
+                  context={{ person_industry: formData.person_industry }}
+                  onSuggestionClick={(suggestion) => handleChange('person_role', suggestion)}
+                  suggestionType="chips"
+                  maxSuggestions={6}
+                  autoGenerate={true}
+                />
+              )}
+            </div>
           </div>
 
           <div className="space-y-4 pt-4 border-t border-gray-100">
@@ -154,14 +197,31 @@ export default function Step1Person({ projectData, onUpdate, onNext }) {
                 </button>
               ))}
             </div>
-            <Input
-              id="environment"
-              placeholder="Or type your own..."
-              value={formData.person_environment}
-              onChange={(e) => handleChange('person_environment', e.target.value)}
-              className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
-              required
-            />
+            <div className="space-y-2">
+              <Input
+                id="environment"
+                placeholder="Or type your own..."
+                value={formData.person_environment}
+                onChange={(e) => handleChange('person_environment', e.target.value)}
+                onFocus={() => handleCustomInput('environment', true)}
+                className="rounded-lg border border-gray-200 focus:border-gray-400 focus:ring-0"
+                required
+              />
+              {showCustomInputs.environment && (
+                <AISuggestions
+                  fieldName="person_environment"
+                  currentValue={formData.person_environment}
+                  context={{ 
+                    person_industry: formData.person_industry,
+                    person_role: formData.person_role 
+                  }}
+                  onSuggestionClick={(suggestion) => handleChange('person_environment', suggestion)}
+                  suggestionType="chips"
+                  maxSuggestions={6}
+                  autoGenerate={true}
+                />
+              )}
+            </div>
           </div>
 
           <div className="space-y-4 pt-6 mt-6 border-t border-gray-200 bg-gray-50/50 -mx-10 px-10 pb-6">

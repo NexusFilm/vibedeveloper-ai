@@ -10,6 +10,7 @@ import Step2Problem from '../components/wizard/Step2Problem';
 import Step3Plan from '../components/wizard/Step3Plan';
 import Step4Pivot from '../components/wizard/Step4Pivot';
 import Step5Payoff from '../components/wizard/Step5Payoff';
+import { ContextualAIAssistant } from '@/components/ui/contextual-ai-assistant';
 
 export default function NewProject() {
   const navigate = useNavigate();
@@ -268,6 +269,16 @@ Make it copy-paste ready for Base44, Cursor, Claude, or any AI code generator.`,
             </motion.div>
           )}
         </AnimatePresence>
+        
+        {/* Contextual AI Assistant */}
+        <ContextualAIAssistant
+          currentStep={currentStep}
+          projectData={projectData}
+          onSuggestionApply={(suggestion) => {
+            // Handle suggestion application based on current step
+            console.log('AI Suggestion:', suggestion);
+          }}
+        />
       </div>
     </div>
   );

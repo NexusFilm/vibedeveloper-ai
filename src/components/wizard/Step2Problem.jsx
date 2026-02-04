@@ -1,14 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { SmartTextarea } from "@/components/ui/smart-textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, ArrowRight, ArrowLeft, Sparkles, Loader2, X } from "lucide-react";
+import { AlertCircle, ArrowRight, ArrowLeft } from "lucide-react";
 import HelpTooltip from './HelpTooltip';
-import PromptRefiner from './PromptRefiner';
-import { base44 } from '@/api/base44Client';
+import { EnhancedSmartTextarea } from '@/components/ui/enhanced-smart-textarea';
+import { AISuggestions } from '@/components/ui/ai-suggestions';
 
 const FREQUENCIES = ['Daily', 'Weekly', 'Monthly', 'Every client interaction', 'Every project', 'Constantly'];
 const IMPACTS = ['5+ hours/week', '10+ hours/week', 'Missed opportunities', 'High stress', 'Lost revenue', 'Client dissatisfaction'];
@@ -142,32 +141,23 @@ Generate 3 common, specific problems or friction points they likely face in thei
             )}
 
             <div className="relative">
-              <SmartTextarea
-                id="problem"
-                placeholder="Be specific. Example: 'I spend hours each week manually copying data between spreadsheets and my CRM' or 'I lose track of which clients I haven't followed up with'"
+              <EnhancedSmartTextarea
+                label=""
+                fieldName="problem_description"
                 value={formData.problem_description}
-                onChange={(e) => handleChange('problem_description', e.target.value)}
-                rows={4}
-                required
-                className="resize-none pr-10"
+                onChange={(value) => handleChange('problem_description', value)}
+                context={{
+                  person_industry: projectData.person_industry,
+                  person_role: projectData.person_role,
+                  person_environment: projectData.person_environment
+                }}
+                placeholder="Be specific. Example: 'I spend hours each week manually copying data between spreadsheets and my CRM' or 'I lose track of which clients I haven't followed up with'"
+                aiSuggestions={true}
+                aiRefinement={true}
+                minRows={4}
+                className="resize-none"
               />
-              {formData.problem_description && (
-                <button
-                  type="button"
-                  onClick={() => handleChange('problem_description', '')}
-                  className="absolute top-2 right-2 p-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
-                >
-                  <X className="h-4 w-4 text-gray-600" />
-                </button>
-              )}
             </div>
-            
-            <PromptRefiner 
-              value={formData.problem_description}
-              onAccept={(refined) => handleChange('problem_description', refined)}
-              context={`User is a ${projectData.person_role} in ${projectData.person_industry}`}
-              fieldName="Problem Description"
-            />
           </div>
 
           <div className="space-y-4 pt-4 border-t border-gray-100">
