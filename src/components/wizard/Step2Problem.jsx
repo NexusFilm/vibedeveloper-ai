@@ -4,10 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, ArrowRight, ArrowLeft } from "lucide-react";
+import { AlertCircle, ArrowRight, ArrowLeft, Loader2, Sparkles } from "lucide-react";
 import HelpTooltip from './HelpTooltip';
 import { EnhancedSmartTextarea } from '@/components/ui/enhanced-smart-textarea';
+import { SmartTextarea } from '@/components/ui/smart-textarea';
 import { AISuggestions } from '@/components/ui/ai-suggestions';
+import { base44 } from '@/api/base44Client';
 
 const FREQUENCIES = ['Daily', 'Weekly', 'Monthly', 'Every client interaction', 'Every project', 'Constantly'];
 const IMPACTS = ['5+ hours/week', '10+ hours/week', 'Missed opportunities', 'High stress', 'Lost revenue', 'Client dissatisfaction'];
