@@ -23,17 +23,12 @@ export const TenantProvider = ({ children }) => {
         const hostname = window.location.hostname;
         let tenantSlug = 'vibedeveloper'; // default
         
-        // Check if it's a subdomain
-        if (hostname.includes('.')) {
-          const parts = hostname.split('.');
-          if (parts.length > 2) {
-            tenantSlug = parts[0]; // subdomain
-          }
-        }
-        
-        // For development, check for specific domains
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
-          // Check URL path or query params for tenant
+        // For Vercel deployments, always use vibedeveloper
+        if (hostname.includes('vercel.app') || hostname.includes('vibedeveloper')) {
+          tenantSlug = 'vibedeveloper';
+        } else if (hostname.includes('aiedu')) {
+          tenantSlug = 'aiedu';
+        } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
           const urlParams = new URLSearchParams(window.location.search);
           tenantSlug = urlParams.get('tenant') || 'vibedeveloper';
         }

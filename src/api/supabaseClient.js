@@ -223,7 +223,7 @@ export const supabaseHelpers = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
       },
       body: JSON.stringify(payload)
     });
@@ -233,19 +233,7 @@ export const supabaseHelpers = {
       throw new Error(error.error || 'Failed to invoke LLM');
     }
     
-    const result = await response.json();
-    
-    // If the result has a response_json_schema, parse the response
-    if (payload.response_json_schema && typeof result === 'string') {
-      try {
-        return JSON.parse(result);
-      } catch (parseError) {
-        console.error('Failed to parse LLM JSON response:', result);
-        return { suggestions: [] };
-      }
-    }
-    
-    return result;
+    return await response.json();
   },
 
   // AI Suggestions via Vercel API

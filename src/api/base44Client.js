@@ -1,10 +1,14 @@
-import { supabaseHelpers } from './supabaseClient';
+import { supabaseHelpers, supabase } from './supabaseClient';
 
 // Mock base44 client that uses Supabase instead
 export const base44 = {
   auth: {
     me: async () => {
       return await supabaseHelpers.getCurrentUser();
+    },
+    getToken: async () => {
+      const session = await supabase.auth.getSession();
+      return session?.data?.session?.access_token;
     },
     logout: (redirectUrl) => {
       supabaseHelpers.signOut();
