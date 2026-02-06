@@ -37,7 +37,7 @@ export const base44 = {
         case 'generate-project':
           return await supabaseHelpers.generateProject(payload.prompt, payload);
         case 'invoke-llm':
-          return await supabaseHelpers.invokeLLM(payload);
+          return await supabaseHelpers.callOpenAI(payload);
         default:
           console.warn(`Function ${functionName} not implemented`);
           return { success: false, error: 'Function not implemented' };
@@ -131,11 +131,11 @@ export const base44 = {
     }
   },
   
-  // Mock integrations
+  // AI integration - calls YOUR Vercel API → OpenAI
   integrations: {
     Core: {
       InvokeLLM: async (payload) => {
-        return await supabaseHelpers.invokeLLM(payload);
+        return await supabaseHelpers.callOpenAI(payload);
       }
     }
   },

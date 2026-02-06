@@ -214,8 +214,8 @@ export const supabaseHelpers = {
     return await response.json();
   },
 
-  // LLM Integration via Vercel API
-  async invokeLLM(payload) {
+  // OpenAI via YOUR Vercel API at /api/invoke-llm
+  async callOpenAI(payload) {
     const session = await supabase.auth.getSession();
     const token = session?.data?.session?.access_token;
     
@@ -230,10 +230,15 @@ export const supabaseHelpers = {
     
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error || 'Failed to invoke LLM');
+      throw new Error(error.error || 'Failed to call OpenAI');
     }
     
     return await response.json();
+  },
+
+  // Keep old name as alias for backward compat
+  async invokeLLM(payload) {
+    return this.callOpenAI(payload);
   },
 
   // AI Suggestions via Vercel API
